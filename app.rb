@@ -4,5 +4,5 @@ require 'sinatra/activerecord'
 require 'sinatra/reloader' if development?
 
 get '/' do
-  erb 'hello world!'
+  erb :index
 end
