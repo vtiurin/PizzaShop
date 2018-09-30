@@ -1,2 +1,13 @@
 <h1>Welcome to PizzaShop</h1>
-<button class="btn btn-primary" onclick="addToCart()">Add to cart</button>
+<div class="container">
+    <div class="row align-items-center">
+    <% @products.each do |product| %>
+        <div class="col">
+            <h2><%= product.title%></h2>
+            <img class="product_thumb_image" src="<%= product.path_to_image%>" alt="">
+            <p><%= product.description%></p>
+            <button class="btn btn-primary" onclick="addToCart()">Add to cart</button>
+        </div>
+    <% end %>
+    </div>
+</div>
