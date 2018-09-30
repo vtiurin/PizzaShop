@@ -9,7 +9,7 @@ class CreateProductsTable < ActiveRecord::Migration[5.2]
       t.boolean :is_veg
       t.boolean :is_best_offer
       t.string :path_to_image
-      
+
       t.timestamps
     end
   end
