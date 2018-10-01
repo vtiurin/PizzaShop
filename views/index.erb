@@ -6,7 +6,9 @@
             <h2><%= product.title%></h2>
             <img class="product_thumb_image" src="<%= product.path_to_image%>" alt="">
             <p><%= product.description%></p>
-            <button class="btn btn-primary" onclick="addToCart()">Add to cart</button>
+            <p>Size: <%= product.size%></p>
+            <p>Price: <%= product.price%></p>
+            <button class="btn btn-sm btn-success" onclick="addToCart(<%= product.id%>)">Add to cart</button>
         </div>
     <% end %>
     </div>
