@@ -8,7 +8,7 @@
             <p><%= product.description%></p>
             <p>Size: <%= product.size%></p>
             <p>Price: <%= product.price%></p>
-            <button class="btn btn-sm btn-success" onclick="addToCart(<%= product.id%>)">Add to cart</button>
+            <button class="btn btn-sm btn-success" onclick="addToCart(<%= product.id%>)">Add to cart (<span class="product_qty_<%= product.id %>">0</span>)</button>
         </div>
     <% end %>
     </div>
