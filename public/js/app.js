@@ -2,6 +2,13 @@ $(() => {
   const cart = JSON.parse(localStorage.getItem('cart'));
   if(!cart) {
     localStorage.setItem('cart', JSON.stringify({ items: [] }));
+  } else {
+    cart.items.map((item) => {
+      const id = item.id;
+      if (id) {
+        updateQTY(id, item.amount);
+      }
+    });
   }
 });
 
