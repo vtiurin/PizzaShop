@@ -1,21 +1,50 @@
 const CART = 'cart';
 $(() => {
-  const cart = JSON.parse(localStorage.getItem(CART));
-  if(!cart) {
-    localStorage.setItem(CART, JSON.stringify({ items: [] }));
-  } else {
-    cart.items.map((item) => {
-      const id = item.id;
-      if (id) {
-        updateQTY(id, item.amount);
-        updateCartButtonQTY(cart.items);
-      }
-    });
+  if (window.location.pathname === "/") {
+    setQTYonProductButtons();
+    setQTYonCartButton();
+  }
+
+  if (window.location.pathname === "/cart") {
+    setQTYonCartButton();
+    setTotalQTYfield();
   }
 });
 
+getCartObjectFromStorage = () => {
+  const cart = JSON.parse(localStorage.getItem(CART));
+  return cart ? cart : { items: [] };
+}
+
+setCartObject = (newCart) => {
+  localStorage.setItem(CART, JSON.stringify(newCart));
+}
+
+setQTYonProductButtons = () => {
+  const cart = getCartObjectFromStorage();
+  const items = cart.items;
+  if (items.length > 0) {
+    items.map((item) => updateQTY(item.id, item.amount));
+  }
+}
+
+setQTYonCartButton = () => {
+  const cart = getCartObjectFromStorage();
+  updateCartButtonQTY(cart.items);
+}
+
+setTotalQTYfield = () => {
+  const cart = getCartObjectFromStorage();
+  cart.items.map((item) => updateQTYField(item.id, item.amount));
+}
+
+updateQTYField = (id, qty) => {
+  domElement = document.getElementsByClassName('item-total-qty_' + id)[0];
+  domElement.innerHTML = qty;
+}
+
 addToCart = (product_id) => {
-  const currentCart = JSON.parse(localStorage.getItem(CART));
+  const currentCart = getCartObjectFromStorage();
   const items = currentCart.items;
 
   let index = items.findIndex(item => item.id === product_id);
@@ -26,7 +55,7 @@ addToCart = (product_id) => {
     items[index].amount += 1;
   }
 
-  localStorage.setItem(CART, JSON.stringify(currentCart));
+  setCartObject(currentCart);
   updateQTY(product_id, items[index].amount);
   updateCartButtonQTY(items);
 }
@@ -40,4 +69,14 @@ updateCartButtonQTY = (items) => {
   domElement = document.getElementsByClassName('cart_button')[0];
   const qty = items.reduce((acc, item) => acc += item.amount, 0);
   domElement.innerHTML = qty;
+}
+
+something = () => {
+  console.log('something()');
+  const xhr = new XMLHttpRequest();
+  const body = JSON.stringify(getCartObjectFromStorage());
+  console.log(body);
+  xhr.open('POST', '/cart', true);
+  xhr.send(body);
+  xhr.onreadystatechange = () => window.location.href = '/cart';
 }
